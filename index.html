@@ -1,255 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be My Valentine?</title>
+    <style>
+      :root {
+        --pink: #ff4d6d;
+        --soft-pink: #ffe5ec;
+        --purple: #6d597a;
+        --white: #ffffff;
+      }
 
-+<!DOCTYPE html>
-+<html lang="en">
-+  <head>
-+    <meta charset="UTF-8" />
-+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-+    <title>Will You Be My Valentine?</title>
-+    <style>
-+      :root {
-+        --pink: #ff4d6d;
-+        --soft-pink: #ffe5ec;
-+        --purple: #6d597a;
-+        --white: #ffffff;
-+      }
-+
-+      * {
-+        box-sizing: border-box;
-+      }
-+
-+      body {
-+        margin: 0;
-+        min-height: 100vh;
-+        font-family: "Poppins", "Segoe UI", sans-serif;
-+        background: radial-gradient(circle at top, #fff0f3 0%, #ffe5ec 40%, #f9c5d1 100%);
-+        display: grid;
-+        place-items: center;
-+        overflow: hidden;
-+      }
-+
-+      .card {
-+        background: var(--white);
-+        padding: 3rem 4rem;
-+        border-radius: 24px;
-+        box-shadow: 0 20px 60px rgba(255, 77, 109, 0.25);
-+        text-align: center;
-+        position: relative;
-+      }
-+
-+      h1 {
-+        margin: 0 0 2rem;
-+        font-size: 2.5rem;
-+        color: var(--purple);
-+      }
-+
-+      .button-row {
-+        display: flex;
-+        gap: 2rem;
-+        justify-content: center;
-+        align-items: center;
-+        position: relative;
-+        min-height: 120px;
-+      }
-+
-+      button {
-+        border: none;
-+        padding: 0.9rem 2.4rem;
-+        font-size: 1.1rem;
-+        border-radius: 999px;
-+        cursor: pointer;
-+        transition: transform 0.2s ease, box-shadow 0.2s ease;
-+        font-weight: 600;
-+      }
-+
-+      #yes-button {
-+        background: var(--pink);
-+        color: var(--white);
-+        box-shadow: 0 10px 20px rgba(255, 77, 109, 0.35);
-+      }
-+
-+      #yes-button:hover {
-+        transform: translateY(-2px) scale(1.03);
-+      }
-+
-+      #no-button {
-+        background: #f3f3f3;
-+        color: #7a7a7a;
-+        position: absolute;
-+      }
-+
-+      .celebration {
-+        display: none;
-+        margin-top: 2rem;
-+      }
-+
-+      .celebration.active {
-+        display: grid;
-+        gap: 1rem;
-+        place-items: center;
-+      }
-+
-+      .heart {
-+        width: 120px;
-+        height: 120px;
-+        background: var(--pink);
-+        position: relative;
-+        transform: rotate(-45deg);
-+        margin: 0 auto;
-+        animation: pulse 1.2s infinite;
-+      }
-+
-+      .heart::before,
-+      .heart::after {
-+        content: "";
-+        width: 120px;
-+        height: 120px;
-+        background: var(--pink);
-+        border-radius: 50%;
-+        position: absolute;
-+      }
-+
-+      .heart::before {
-+        top: -60px;
-+        left: 0;
-+      }
-+
-+      .heart::after {
-+        left: 60px;
-+        top: 0;
-+      }
-+
-+      .celebration p {
-+        margin: 0;
-+        font-size: 1.3rem;
-+        color: var(--purple);
-+      }
-+
-+      .celebration img {
-+        width: min(280px, 70vw);
-+        border-radius: 16px;
-+        box-shadow: 0 16px 30px rgba(109, 89, 122, 0.25);
-+      }
-+
-+      .confetti {
-+        position: fixed;
-+        inset: 0;
-+        pointer-events: none;
-+        overflow: hidden;
-+        display: none;
-+      }
-+
-+      .confetti.active {
-+        display: block;
-+      }
-+
-+      .confetti-piece {
-+        position: absolute;
-+        width: 12px;
-+        height: 18px;
-+        opacity: 0.9;
-+        animation: fall 3.5s linear infinite;
-+      }
-+
-+      @keyframes pulse {
-+        0% {
-+          transform: rotate(-45deg) scale(1);
-+        }
-+        50% {
-+          transform: rotate(-45deg) scale(1.1);
-+        }
-+        100% {
-+          transform: rotate(-45deg) scale(1);
-+        }
-+      }
-+
-+      @keyframes fall {
-+        0% {
-+          transform: translateY(-20vh) rotate(0deg);
-+        }
-+        100% {
-+          transform: translateY(120vh) rotate(360deg);
-+        }
-+      }
-+
-+      @media (max-width: 600px) {
-+        .card {
-+          width: 90%;
-+          padding: 2.5rem 2rem;
-+        }
-+
-+        h1 {
-+          font-size: 2rem;
-+        }
-+
-+        .button-row {
-+          min-height: 140px;
-+        }
-+      }
-+    </style>
-+  </head>
-+  <body>
-+    <div class="confetti" id="confetti"></div>
-+    <div class="card">
-+      <h1>Will you be my valentine?</h1>
-+      <div class="button-row" id="button-area">
-+        <button id="yes-button" type="button">Yes 💖</button>
-+        <button id="no-button" type="button">No</button>
-+      </div>
-+      <div class="celebration" id="celebration">
-+        <div class="heart"></div>
-+        <p>You just made my day! 🎉</p>
-+        <img
-+          src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3o5dWN0b2Jtdm1zOXRtdG1mZ3d1d2l0MjFmeHczZTV2Y3VldmRrYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ohs4BSacFKI7A717y/giphy.gif"
-+          alt="Celebration gif"
-+        />
-+      </div>
-+    </div>
-+
-+    <script>
-+      const noButton = document.getElementById("no-button");
-+      const yesButton = document.getElementById("yes-button");
-+      const buttonArea = document.getElementById("button-area");
-+      const celebration = document.getElementById("celebration");
-+      const confetti = document.getElementById("confetti");
-+
-+      const colors = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"];
-+
-+      const createConfetti = () => {
-+        confetti.innerHTML = "";
-+        for (let i = 0; i < 40; i += 1) {
-+          const piece = document.createElement("div");
-+          piece.classList.add("confetti-piece");
-+          piece.style.left = `${Math.random() * 100}%`;
-+          piece.style.animationDelay = `${Math.random() * 3}s`;
-+          piece.style.backgroundColor = colors[i % colors.length];
-+          piece.style.transform = `translateY(-20vh) rotate(${Math.random() * 360}deg)`;
-+          confetti.appendChild(piece);
-+        }
-+      };
-+
-+      const moveNoButton = () => {
-+        const areaRect = buttonArea.getBoundingClientRect();
-+        const buttonRect = noButton.getBoundingClientRect();
-+        const maxX = Math.max(0, areaRect.width - buttonRect.width);
-+        const maxY = Math.max(0, areaRect.height - buttonRect.height);
-+        const randomX = Math.random() * maxX;
-+        const randomY = Math.random() * maxY;
-+        noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
-+      };
-+
-+      ["mouseover", "click", "touchstart"].forEach((eventName) => {
-+        noButton.addEventListener(eventName, moveNoButton);
-+      });
-+
-+      yesButton.addEventListener("click", () => {
-+        celebration.classList.add("active");
-+        confetti.classList.add("active");
-+        createConfetti();
-+      });
-+
-+      moveNoButton();
-+    </script>
-+  </body>
-+</html>
- 
+      * {
+        box-sizing: border-box;
+      }
 
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Poppins", "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #fff0f3 0%, #ffe5ec 40%, #f9c5d1 100%);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      .card {
+        background: var(--white);
+        padding: 3rem 4rem;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(255, 77, 109, 0.25);
+        text-align: center;
+        position: relative;
+      }
+
+      .card.celebrating {
+        transform: translateY(-12px);
+        transition: transform 0.3s ease;
+      }
+
+      h1 {
+        margin: 0 0 1.4rem;
+        font-size: 2.5rem;
+        color: var(--purple);
+      }
+
+      .button-row {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        min-height: 120px;
+      }
+
+      button {
+        border: none;
+        padding: 0.9rem 2.4rem;
+        font-size: 1.1rem;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        font-weight: 600;
+      }
+
+      #yes-button {
+        background: var(--pink);
+        color: var(--white);
+        box-shadow: 0 10px 20px rgba(255, 77, 109, 0.35);
+      }
+
+      #yes-button:hover {
+        transform: translateY(-2px) scale(1.03);
+      }
+
+      #no-button {
+        background: #f3f3f3;
+        color: #7a7a7a;
+        position: absolute;
+      }
+
+      .celebration {
+        display: none;
+        margin-top: 2rem;
+      }
+
+      .celebration.active {
+        display: grid;
+        gap: 1.2rem;
+        place-items: center;
+        margin-top: 0.6rem;
+      }
+
+      .heart {
+        width: 90px;
+        height: 90px;
+        background: var(--pink);
+        position: relative;
+        transform: rotate(-45deg);
+        margin: -18px auto 0;
+        animation: pulse 1.2s infinite;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        width: 90px;
+        height: 90px;
+        background: var(--pink);
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      .heart::before {
+        top: -45px;
+        left: 0;
+      }
+
+      .heart::after {
+        left: 45px;
+        top: 0;
+      }
+
+      .celebration img {
+        width: min(360px, 85vw);
+        max-height: 45vh;
+        object-fit: contain;
+        border-radius: 16px;
+        margin-top: -6px;
+        box-shadow: 0 16px 30px rgba(109, 89, 122, 0.25);
+      }
+
+      .confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        display: none;
+      }
+
+      .confetti.active {
+        display: block;
+      }
+
+      .confetti-piece {
+        position: absolute;
+        width: 12px;
+        height: 18px;
+        opacity: 0.9;
+        animation: fall 3.5s linear infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: rotate(-45deg) scale(1);
+        }
+        50% {
+          transform: rotate(-45deg) scale(1.1);
+        }
+        100% {
+          transform: rotate(-45deg) scale(1);
+        }
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-20vh) rotate(0deg);
+        }
+        100% {
+          transform: translateY(120vh) rotate(360deg);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .card {
+          width: 90%;
+          padding: 2.5rem 2rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .button-row {
+          min-height: 140px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="confetti" id="confetti"></div>
+    <div class="card" id="card">
+      <h1>Will you be my valentine?</h1>
+      <div class="button-row" id="button-area">
+        <button id="yes-button" type="button">Yes 💖</button>
+        <button id="no-button" type="button">No</button>
+      </div>
+      <div class="celebration" id="celebration">
+        <div class="heart"></div>
+        <img
+          src="https://media1.tenor.com/m/BmCbsCskdA4AAAAC/omg-oh-my-god.gif"
+          alt="Celebration omg gif"
+        />
+      </div>
+    </div>
+
+    <script>
+      const noButton = document.getElementById("no-button");
+      const yesButton = document.getElementById("yes-button");
+      const buttonArea = document.getElementById("button-area");
+      const celebration = document.getElementById("celebration");
+      const card = document.getElementById("card");
+      const confetti = document.getElementById("confetti");
+
+      const colors = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"];
+
+      const createConfetti = () => {
+        confetti.innerHTML = "";
+        for (let i = 0; i < 40; i += 1) {
+          const piece = document.createElement("div");
+          piece.classList.add("confetti-piece");
+          piece.style.left = `${Math.random() * 100}%`;
+          piece.style.animationDelay = `${Math.random() * 3}s`;
+          piece.style.backgroundColor = colors[i % colors.length];
+          piece.style.transform = `translateY(-20vh) rotate(${Math.random() * 360}deg)`;
+          confetti.appendChild(piece);
+        }
+      };
+
+      const moveNoButton = () => {
+        const areaRect = buttonArea.getBoundingClientRect();
+        const buttonRect = noButton.getBoundingClientRect();
+        const maxX = Math.max(0, areaRect.width - buttonRect.width);
+        const maxY = Math.max(0, areaRect.height - buttonRect.height);
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+        noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+      };
+
+      ["mouseover", "click", "touchstart"].forEach((eventName) => {
+        noButton.addEventListener(eventName, moveNoButton);
+      });
+
+      yesButton.addEventListener("click", () => {
+        celebration.classList.add("active");
+        confetti.classList.add("active");
+        card.classList.add("celebrating");
+        createConfetti();
+      });
+
+      moveNoButton();
+    </script>
+  </body>
+</html>
